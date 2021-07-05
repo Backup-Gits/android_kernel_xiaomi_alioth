@@ -1,0 +1,19 @@
+version: 2.1
+jobs:
+  build:
+    machine:
+      image: ubuntu-2004:202010-01 # recommended linux image
+    steps: 
+            - checkout
+         #   - run: git clone --depth 1  "https://github.com/Little-W/android_kernel_xiaomi_ginkgo" --branch "$CIRCLE_BRANCH" 
+            - run: 
+                name: Install Deps
+                command: curl -OsSL https://raw.githubusercontent.com/Little-W/scripts/master/environment.sh && bash environment.sh 
+            - run: 
+                name: Build
+                command: |
+                    curl -OsSL https://raw.githubusercontent.com/Little-W/scripts/master/build.sh && bash build.sh
+                no_output_timeout: 240m
+            - run: 
+                name: Upload
+                command: curl -OsSL https://raw.githubusercontent.com/Little-W/scripts/master/upload.sh && bash upload.sh
